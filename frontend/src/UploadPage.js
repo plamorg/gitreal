@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function uploadImage(image) {
-  const url = "localhost:8000/image/uploaddesktop/";
+  const url = "http://localhost:8000/image/uploaddesktop/";
   fetch(url, {
     method: "POST",
     body: {
