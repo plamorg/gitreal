@@ -4,7 +4,10 @@ function uploadImage(image) {
   const url = "localhost:8000/image/uploaddesktop/";
   fetch(url, {
     method: "POST",
-    body: image,
+    body: {
+      file: image,
+      username: "hardcoded",
+    },
     headers: {
       "content-type": image.type,
       "content-length": `${image.size}`,
