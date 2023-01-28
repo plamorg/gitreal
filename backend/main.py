@@ -4,9 +4,13 @@ import datetime
 import sys
 
 from fastapi import FastAPI, File, UploadFile, Response
+import socketio
 
 app = FastAPI()
-database = dict()
+sio = socketio.Server()
+database = {
+    "users": list()
+}
 
 
 @app.get("/")
@@ -44,7 +48,6 @@ async def get_all_files():
         return {"error": "failure collecting filenames"}
 
 
-# Returns an image from a given
 @app.get("/image/get", responses={200: {"content": {"image/png": {}}}}, response_class=Response)
 async def get_file(suffix_filename: str):
     """
@@ -58,3 +61,14 @@ async def get_file(suffix_filename: str):
             return Response(content=content, media_type="image/png")
     except:
         return {"error": "could not return images :("}
+
+
+@app.get("/user")
+async def get_user(username: str):
+    """
+    Get the information of the user with the given username
+    """
+    if username in database["users"]:
+        return {"user": database.get(username)}
+    else:
+        return {"error": "could not find user :("}

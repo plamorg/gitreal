@@ -69,6 +69,14 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "netifaces"
+version = "0.10.6"
+description = "Portable network interface information."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pydantic"
 version = "1.10.4"
 description = "Data validation and settings management using python type hints"
@@ -95,6 +103,18 @@ python-versions = "*"
 six = ">=1.4.0"
 
 [[package]]
+name = "setuptools"
+version = "3.3"
+description = "Easily download, build, install, upgrade, and uninstall Python packages"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+certs = ["certifi (==1.0.1)"]
+"ssl:sys_platform=='win32'" = ["wincertstore (==0.2)"]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -109,6 +129,18 @@ description = "Sniff out which async library your code is running under"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "socketio"
+version = "0.2.1"
+description = ""
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+netifaces = "0.10.6"
+setuptools = "3.3"
 
 [[package]]
 name = "starlette"
@@ -150,7 +182,7 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "2863888f712af270bd1016457d3657880809bca521168f28bb467e6096b845f6"
+content-hash = "43afa7d01c81091a5e58798c715e4a7df92b8dd0c2522ba3440262ffedb9c753"
 
 [metadata.files]
 anyio = [
@@ -176,6 +208,27 @@ h11 = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
+]
+netifaces = [
+    {file = "netifaces-0.10.6-cp27-cp27m-win32.whl", hash = "sha256:137a77c2e0a68a3e409a532fe73340c3df6a59ffe8eb565ec8b1f0a131402d09"},
+    {file = "netifaces-0.10.6-cp27-cp27m-win_amd64.whl", hash = "sha256:ef223d45b73cc96c25a6295f471106b3195d2367b7f153e43490673d89e9240e"},
+    {file = "netifaces-0.10.6-cp34-cp34m-win32.whl", hash = "sha256:4ddf0f329d83516bba096b7eb1ad2ee354a98e2483f89ad3a590e653ece963c8"},
+    {file = "netifaces-0.10.6-cp34-cp34m-win_amd64.whl", hash = "sha256:61fd2706de21aac11475c921ba0fd98af19d5280702a11c5c8e2e910765dc378"},
+    {file = "netifaces-0.10.6-cp35-cp35m-win32.whl", hash = "sha256:48275e627ce9220acfed2e1ca1e4cf01f58940412f2aebac7995750b50232701"},
+    {file = "netifaces-0.10.6-cp35-cp35m-win_amd64.whl", hash = "sha256:f8b352247ae4b6731192d33fd35b27f247e3e4618a2d5cf65de41d46bbb53223"},
+    {file = "netifaces-0.10.6-py2.7-win-amd64.egg", hash = "sha256:8c3a2c7d573511507f0f29c9d1a28ce1b2a958b8d0d7a1b1966c6fd0fa5d2953"},
+    {file = "netifaces-0.10.6-py2.7-win32.egg", hash = "sha256:a0c7c19e1fb62ac6018582f72d15ac056e75c3d2ab222fb25369e7766ed67453"},
+    {file = "netifaces-0.10.6-py3.4-win-amd64.egg", hash = "sha256:3b19bf224b3e46c62f5f5e65a9fbd2e9731cda09289c76aca110a3dbdf0c3332"},
+    {file = "netifaces-0.10.6-py3.4-win32.egg", hash = "sha256:5a0114933657eebe4985fdf7b0099a27ec75501901000770addca6ad7bd23008"},
+    {file = "netifaces-0.10.6-py3.5-win-amd64.egg", hash = "sha256:7925add91982cb689963cc28fb8718c006f7713b527d262e32b29b4491cec295"},
+    {file = "netifaces-0.10.6-py3.5-win32.egg", hash = "sha256:2245677ee3aa1244bbd0fbf3d6e0158d38b612eba406e7be9639e7efe0371bfa"},
+    {file = "netifaces-0.10.6.tar.gz", hash = "sha256:0c4da523f36d36f1ef92ee183f2512f3ceb9a9d2a45f7d19cda5a42c6689ebe0"},
+    {file = "netifaces-0.10.6.win-amd64-py2.7.exe", hash = "sha256:60f25e5b6d2a682a394c87a6d2bf4d38c8dd8999ee32b955af88ceccaef7fe93"},
+    {file = "netifaces-0.10.6.win-amd64-py3.4.exe", hash = "sha256:c455ca29737bf9b298408fd78a48f8fc6ddaa1f50a6eb92d814a8874412c631b"},
+    {file = "netifaces-0.10.6.win-amd64-py3.5.exe", hash = "sha256:369eb616a6c844987bd4df486bb5f591aa0d5552378c6831f56ed81cfc228cab"},
+    {file = "netifaces-0.10.6.win32-py2.7.exe", hash = "sha256:337f0fae970ab7a9acf5690516f7c7795f41934350cc1e8ad33c5c0331904ac0"},
+    {file = "netifaces-0.10.6.win32-py3.4.exe", hash = "sha256:563a18f942a9c9f64eed27fe2a1b3dfb5866a440cdaf4d833213798699cc1789"},
+    {file = "netifaces-0.10.6.win32-py3.5.exe", hash = "sha256:88d8fa4fcccaca07519141e95b42f52fb650bed2e8f5b29c44e22968b92b7097"},
 ]
 pydantic = [
     {file = "pydantic-1.10.4-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:b5635de53e6686fe7a44b5cf25fcc419a0d5e5c1a1efe73d49d48fe7586db854"},
@@ -218,6 +271,11 @@ pydantic = [
 python-multipart = [
     {file = "python-multipart-0.0.5.tar.gz", hash = "sha256:f7bb5f611fc600d15fa47b3974c8aa16e93724513b49b5f95c81e6624c83fa43"},
 ]
+setuptools = [
+    {file = "setuptools-3.3-py2.py3-none-any.whl", hash = "sha256:4705222d7b1d308f67bd4a34ff2fb8a35b8a42f68ccb4a60586a2dd979665875"},
+    {file = "setuptools-3.3.tar.gz", hash = "sha256:f3e6155f9bb62bfd59b7f6cc2ecda21aae903e6b585f8bc55e801609c5f7814f"},
+    {file = "setuptools-3.3.zip", hash = "sha256:e085debac72b33ad95da3ed2523b01441e2fb1a5c9279ac3f9e1a78e4119aaf2"},
+]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
@@ -225,6 +283,9 @@ six = [
 sniffio = [
     {file = "sniffio-1.3.0-py3-none-any.whl", hash = "sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384"},
     {file = "sniffio-1.3.0.tar.gz", hash = "sha256:e60305c5e5d314f5389259b7f22aaa33d8f7dee49763119234af3755c55b9101"},
+]
+socketio = [
+    {file = "socketio-0.2.1.tar.gz", hash = "sha256:dee5abde39c6021d9d1874582479a4e7f8a8352b38bc7731fb6b27b76976f62c"},
 ]
 starlette = [
     {file = "starlette-0.22.0-py3-none-any.whl", hash = "sha256:b5eda991ad5f0ee5d8ce4c4540202a573bb6691ecd0c712262d0bc85cf8f2c50"},
