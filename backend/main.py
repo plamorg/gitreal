@@ -29,12 +29,11 @@ async def read_root():
 @app.post("/image/uploaddesktop/")
 async def create_file(file: UploadFile = File()):
     try:
-        print(file)
         contents = file.file.read()
         time = datetime.date.today()
         directory = "database"
-        filename = f"{directory}/{time.isoformat()}_{username}"
-        with open(filename) as f:
+        filename = f"{directory}/{time.isoformat()}"
+        with open(filename, "wb+") as f:
             f.write(contents)
     except:
         return {"error": "error uploading the desktop screenshot :("}
