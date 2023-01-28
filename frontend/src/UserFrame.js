@@ -18,8 +18,11 @@ export default function UserFrame(props) {
     fetch(
       "http://localhost:8000/image/get?" +
         new URLSearchParams({ username: props.username })
-    ).then((res) => setImage(res));
+    )
+      .then((res) => res.blob())
+      .then((blob) => setImage(URL.createObjectURL(blob)));
   }, []);
+  console.log(image);
   return (
     <Center py={6}>
       <Box
