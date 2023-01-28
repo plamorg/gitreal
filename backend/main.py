@@ -4,6 +4,7 @@ import datetime
 import sys
 
 from fastapi import FastAPI, File, UploadFile, Response, Form
+from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 import socketio
 
@@ -62,14 +63,12 @@ async def get_file(username: str):
     """
     Returns an image from the database
     """
-    try:
-        directory = "database"
-        filename = f"{directory}/{username}.png"
-        with open(filename) as f:
-            content = f.read()
-            return Response(content=content, media_type="image/png")
-    except:
-        return {"error": "could not return images :("}
+    source_dir = Path("database/")
+    files = source_dir.iterdir()
+    usernames = [f.name.split(".")[0] for f in files]
+    if username not in usernames:
+        return {"error": f"username {username} not found"}
+    return FileResponse(f"database/{username}.png")
 
 
 @app.get("/user")
