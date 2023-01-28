@@ -43,28 +43,28 @@ async def create_file(file: UploadFile = File(), username: str = Form()):
         return {"msg": "successfully uploaded desktop file"}
 
 
-@app.get("/image/getall")
-async def get_all_files():
+@app.get("/image/usernames")
+async def get_usernames():
     """
     Returns a list of usernames to get the images from
     """
     try:
         source_dir = Path("database/")
         files = source_dir.iterdir()
-        filenames = [f.name for f in files]
-        return {"files": filenames}
+        usernames = [f.name.split(".")[0] for f in files]
+        return {"files": usernames}
     except: 
         return {"error": "failure collecting filenames"}
 
 
 @app.get("/image/get", responses={200: {"content": {"image/png": {}}}}, response_class=Response)
-async def get_file(suffix_filename: str):
+async def get_file(username: str):
     """
     Returns an image from the database
     """
     try:
         directory = "database"
-        filename = f"{directory}/{suffix_filename}"
+        filename = f"{directory}/{username}.png"
         with open(filename) as f:
             content = f.read()
             return Response(content=content, media_type="image/png")
