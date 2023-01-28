@@ -20,6 +20,10 @@ export default function Login() {
   const [username, setUsername] = useState();
   const navigate = useNavigate();
 
+  if (!!data.username) {
+    navigate("/");
+  }
+
   return (
     <Flex
       minH={"100vh"}
