@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Center, Box, Input, Button, Image } from "@chakra-ui/react";
 
 function uploadImage(image) {
   const url = "http://localhost:8000/image/uploaddesktop/";
@@ -26,13 +27,26 @@ const UploadPage = () => {
   };
 
   return (
-    <div>
-      <main class="flex flex-col h-screen mx-auto max-w-screen-md px-4">
-        <input type="file" onChange={handleFileChange} />
-        <img src={fileURL} />
-        <a onClick={() => uploadImage(file)}>Upload</a>
-      </main>
-    </div>
+    <Center h="100vh">
+      <Box>
+        <Input
+          placeholder="Upload"
+          onChange={handleFileChange}
+          type="file"
+          mb={5}
+        />
+        <Center>
+          {file ? (
+            <Image w="64" h="64" src={fileURL} />
+          ) : (
+            <Box w="64" h="64" bg="gray"></Box>
+          )}
+        </Center>
+        <Button mt={5} onClick={() => uploadImage(file)}>
+          Upload
+        </Button>
+      </Box>
+    </Center>
   );
 };
 
