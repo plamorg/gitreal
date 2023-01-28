@@ -2,18 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import App from "./App";
 import UploadPage from "./UploadPage";
+import Login from "./Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <App />,
   },
   {
     path: "/upload",
     element: <UploadPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
