@@ -27,7 +27,7 @@ async def read_root():
 
 
 @app.post("/image/uploaddesktop/")
-async def create_file(file: UploadFile = Form()):
+async def create_file(file: UploadFile = File()):
     try:
         print(file)
         contents = file.file.read()

@@ -2,13 +2,11 @@ import { useState } from "react";
 
 function uploadImage(image) {
   const url = "http://localhost:8000/image/uploaddesktop/";
+  const formData = new FormData();
+  formData.append("file", image);
   fetch(url, {
     method: "POST",
-    body: image,
-    headers: {
-      "content-type": image.type,
-      "content-length": `${image.size}`,
-    },
+    body: formData,
   })
     .then((res) => res.json())
     .then((data) => console.log(`Successfully uploaded image: ${data}`))
