@@ -1,13 +1,10 @@
 import { useState } from "react";
 
 function uploadImage(image) {
-  const url = "http://localhost:8000/image/uploaddesktop/";
+  const url = "localhost:8000/image/uploaddesktop/";
   fetch(url, {
     method: "POST",
-    body: {
-      file: image,
-      username: "hardcoded",
-    },
+    body: image,
     headers: {
       "content-type": image.type,
       "content-length": `${image.size}`,
