@@ -4,6 +4,7 @@ function uploadImage(image) {
   const url = "http://localhost:8000/image/uploaddesktop/";
   const formData = new FormData();
   formData.append("file", image);
+  formData.append("username", "enterusernamehere");
   fetch(url, {
     method: "POST",
     body: formData,
