@@ -32,6 +32,7 @@ async def create_file(file: UploadFile = File(), username: str = Form()):
         print(username)
         contents = file.file.read()
         time = datetime.date.today()
+        directory = "database"
         filename = f"{directory}/{time.isoformat()}_{username}"
         with open(filename, "wb+") as f:
             f.write(contents)
