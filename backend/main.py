@@ -3,11 +3,10 @@ from pathlib import Path
 import datetime
 import sys
 
-from fastapi import FastAPI, File, UploadFile, Response
+from fastapi import FastAPI, File, UploadFile, Response, Form
 import socketio
 
 app = FastAPI()
-sio = socketio.Server()
 database = {
     "users": list()
 }
@@ -19,8 +18,9 @@ async def read_root():
 
 
 @app.post("/image/uploaddesktop/")
-async def create_file(file: UploadFile, username: str):
+async def create_file(file: UploadFile = Form()):
     try:
+        print(file)
         contents = file.file.read()
         time = datetime.date.today()
         directory = "database"
