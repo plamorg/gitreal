@@ -4,12 +4,21 @@ import datetime
 import sys
 
 from fastapi import FastAPI, File, UploadFile, Response, Form
+from starlette.middleware.cors import CORSMiddleware
 import socketio
 
 app = FastAPI()
 database = {
     "users": list()
 }
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
