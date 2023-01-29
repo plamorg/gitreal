@@ -25,11 +25,12 @@ async def read_root():
     return {"info": "Hello World"}
 
 
-@app.post("/image/uploaddesktop/")
-async def create_file(file: UploadFile = File(), username: str = Form()):
+def create_file(file: UploadFile, username: str, directory: str):
+    """
+    Create a file in the given directory attached to the given username
+    """
     try:
         contents = file.file.read()
-        directory = "database"
         Path(f"{directory}/").mkdir(parents=True, exist_ok=True)
         filename = f"{directory}/{username}.png"
         with open(filename, "wb+") as f:
@@ -42,13 +43,28 @@ async def create_file(file: UploadFile = File(), username: str = Form()):
         return {"msg": "successfully uploaded desktop file"}
 
 
-@app.get("/image/usernames")
-async def get_usernames():
+@app.post("/image/uploaddesktop/")
+async def create_file_desktop(file: UploadFile = File(), username: str = Form()):
+    """
+    Create a file in the directory for desktop shots
+    """
+    return create_file(file, username, "database")
+
+
+@app.post("/webcam/upload/")
+async def create_file_webcam(file: UploadFile = File(), username: str = Form()):
+    """
+    Create a file in the directory for webcam shots
+    """
+    return create_file(file, username, "webcam")
+
+
+def get_usernames(directory: str):
     """
     Returns a list of usernames to get the images from
     """
     try:
-        source_dir = Path("database/")
+        source_dir = Path(directory)
         files = source_dir.iterdir()
         usernames = [f.name.split(".")[0] for f in files]
         return {"files": usernames}
@@ -56,22 +72,54 @@ async def get_usernames():
         return {"error": "failure collecting filenames"}
 
 
-@app.get(
-    "/image/get",
-    responses={200: {"content": {"image/png": {}}}},
-    response_class=Response,
-)
-async def get_file(username: str):
+@app.get("/image/usernames")
+async def get_usernames_desktop():
+    """
+    Returns a list of usernames to get the desktop images from
+    """
+    return get_usernames("database/")
+
+
+@app.get("/webcam/usernames")
+async def get_username_webcam():
+    """
+    Returns a list of usernames to get the desktop images from
+    """
+    return get_usernames("webcam/")
+
+
+def get_file(username: str, directory: str):
     """
     Returns an image from the database
     """
-    source_dir = Path("database/")
+    source_dir = Path(directory)
     files = source_dir.iterdir()
     usernames = [f.name.split(".")[0] for f in files]
     if username not in usernames:
         return {"error": f"username {username} not found"}
     return FileResponse(f"database/{username}.png")
 
+@app.get(
+    "/image/get",
+    responses={200: {"content": {"image/png": {}}}},
+    response_class=Response,
+)
+async def get_file_desktop(username: str):
+    """
+    Returns an image from the desktop database
+    """
+    return get_file(username, "database/")
+
+@app.get(
+    "/webcam/get",
+    responses={200: {"content": {"image/png": {}}}},
+    response_class=Response,
+)
+async def get_file_webcam(username: str):
+    """
+    Returns an image from the desktop database
+    """
+    return get_file(username, "webcam/")
 
 @app.get("/user")
 async def get_user(username: str):
