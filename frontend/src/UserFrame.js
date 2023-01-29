@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import {
   Box,
   Heading,
@@ -6,13 +6,16 @@ import {
   Flex,
   Center,
   useColorModeValue,
+  Text,
   HStack,
 } from "@chakra-ui/react";
 import { BsHeartFill, BsHeart } from "react-icons/bs";
+import data from "./global";
 
 export default function UserFrame(props) {
   const [liked, setLiked] = useState(false);
   const [image, setImage] = useState(null);
+  const [amt, setAmt] = useState(0);
 
   useEffect(() => {
     fetch(
@@ -22,7 +25,20 @@ export default function UserFrame(props) {
       .then((res) => res.blob())
       .then((blob) => setImage(URL.createObjectURL(blob)));
   }, []);
-  console.log(image);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:8000/likes?" +
+        new URLSearchParams({ username: props.username })
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        if (!!json.likes) {
+          setAmt(json.likes);
+        }
+      });
+  });
+
   return (
     <Center py={6}>
       <Box
@@ -57,8 +73,56 @@ export default function UserFrame(props) {
             roundedBottom={"sm"}
             borderLeft={"1px"}
             cursor="pointer"
-            onClick={() => setLiked(!liked)}
+            onClick={() => {
+              setLiked(!liked);
+              if (liked === false) {
+                const content = {
+                  targetuser: props.username,
+                  sourceuser: data.username(),
+                };
+                console.log(content);
+                fetch("http://localhost:8000/like?", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(content),
+                })
+                  .then((res) => res.json())
+                  .then((json) => {
+                    console.log(json);
+                    if (json.likes !== null && json.likes !== undefined) {
+                      console.log("updating 2");
+                      setAmt(json.likes);
+                    }
+                  })
+                  .catch((err) => console.error(err));
+              } else {
+                const content = {
+                  targetuser: props.username,
+                  sourceuser: data.username(),
+                };
+                console.log(content);
+                fetch("http://localhost:8000/unlike?", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(content),
+                })
+                  .then((res) => res.json())
+                  .then((json) => {
+                    console.log(json);
+                    if (json.likes !== null && json.likes !== undefined) {
+                      console.log("updating");
+                      setAmt(json.likes);
+                    }
+                  })
+                  .catch((err) => console.error(err));
+              }
+            }}
           >
+            <Text>{amt}</Text>
             {liked ? (
               <BsHeartFill fill="red" fontSize={"24px"} />
             ) : (

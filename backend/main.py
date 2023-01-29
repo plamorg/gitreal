@@ -3,7 +3,7 @@ from pathlib import Path
 import datetime
 import sys
 
-from fastapi import FastAPI, File, UploadFile, Response, Form
+from fastapi import FastAPI, File, UploadFile, Response, Form, Request
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 import socketio
@@ -86,29 +86,39 @@ async def get_user(username: str):
 
 
 @app.post("/like")
-async def like_post(target_usr: str, source_usr: str):
+async def like_post(liker: Request):
     """
     Like the target user's post from source user
     """
-    if target_usr not in database["users"]:
-        return {"error": f"target user {target_usr} not in users"}
-    if source_usr not in database["users"]:
-        return {"error": f"source user {source_usr} not in users"}
+    liker = await liker.json()
+    if liker["targetuser"] not in database["users"]:
+        database["users"][liker["targetuser"]] = set()
+    if liker["sourceuser"] not in database["users"]:
+        database["users"][liker["sourceuser"]] = set()
 
-    database["users"][target_usr].add(source_usr)
+    if liker["sourceuser"] not in database["users"][liker["targetuser"]]:
+        database["users"][liker["targetuser"]].add(liker["sourceuser"])
+
+    print(database)
+    return {"likes": len(database["users"][liker["targetuser"]])}
 
 
 @app.post("/unlike")
-async def unlike_post(target_usr: str, source_usr: str):
+async def unlike_post(liker: Request):
     """
     Unlike the target user's post from source user
     """
-    if target_usr not in database["users"]:
-        return {"error": f"target user {target_usr} not in users"}
-    if source_usr not in database["users"]:
-        return {"error": f"source user {source_usr} not in users"}
+    liker = await liker.json()
+    if liker["targetuser"] not in database["users"]:
+        database["users"][liker["targetuser"]] = set()
+    if liker["sourceuser"] not in database["users"]:
+        database["users"][liker["sourceuser"]] = set()
 
-    database["users"][target_usr].remove(source_usr)
+    if liker["sourceuser"] in database["users"][liker["targetuser"]]:
+        database["users"][liker["targetuser"]].remove(liker["sourceuser"])
+
+    print(database)
+    return {"likes": len(database["users"][liker["targetuser"]])}
 
 
 @app.get("/likes")
