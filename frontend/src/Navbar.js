@@ -57,7 +57,9 @@ export default function Navbar() {
           />
           <HStack spacing={8} alignItems={"center"}>
             <Box>
-              <Heading size="md">gitReal</Heading>
+              <Heading as={"a"} onClick={() => navigate("/home")} size="md">
+                gitReal
+              </Heading>
             </Box>
             <HStack
               as={"nav"}

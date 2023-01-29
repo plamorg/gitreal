@@ -122,12 +122,14 @@ export default function UserFrame(props) {
               }
             }}
           >
-            <Text>{amt}</Text>
-            {liked ? (
-              <BsHeartFill fill="red" fontSize={"24px"} />
-            ) : (
-              <BsHeart fontSize={"24px"} />
-            )}
+            <HStack>
+              <Text>{amt}</Text>
+              {liked ? (
+                <BsHeartFill fill="red" fontSize={"24px"} />
+              ) : (
+                <BsHeart fontSize={"24px"} />
+              )}
+            </HStack>
           </Flex>
         </HStack>
       </Box>
