@@ -9,7 +9,7 @@ from starlette.middleware.cors import CORSMiddleware
 import socketio
 
 app = FastAPI()
-database = {"users": list()}
+database = {"users": dict()}
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,6 +35,7 @@ async def create_file(file: UploadFile = File(), username: str = Form()):
         filename = f"{directory}/{username}.png"
         with open(filename, "wb+") as f:
             f.write(contents)
+            database["users"]["username"] = set()
     except:
         return {"error": "error uploading the desktop screenshot :("}
     finally:
@@ -82,3 +83,40 @@ async def get_user(username: str):
         return {"user": database.get(username)}
     else:
         return {"error": "could not find user :("}
+
+
+@app.post("/like")
+async def like_post(target_usr: str, source_usr: str):
+    """
+    Like the target user's post from source user
+    """
+    if target_usr not in database["users"]:
+        return {"error": f"target user {target_usr} not in users"}
+    if source_usr not in database["users"]:
+        return {"error": f"source user {source_usr} not in users"}
+
+    database["users"][target_usr].add(source_usr)
+
+
+@app.post("/unlike")
+async def unlike_post(target_usr: str, source_usr: str):
+    """
+    Unlike the target user's post from source user
+    """
+    if target_usr not in database["users"]:
+        return {"error": f"target user {target_usr} not in users"}
+    if source_usr not in database["users"]:
+        return {"error": f"source user {source_usr} not in users"}
+
+    database["users"][target_usr].remove(source_usr)
+
+
+@app.get("/likes")
+async def get_likes(username: str):
+    """
+    Get the number of likes of a user's post
+    """
+    if username not in database["users"]:
+        return {"error": f"user {username} not in users"}
+
+    return {"likes": len(database["users"][username])}
