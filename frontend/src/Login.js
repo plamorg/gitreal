@@ -20,7 +20,7 @@ export default function Login() {
   const [username, setUsername] = useState();
   const navigate = useNavigate();
 
-  if (!!data.username) {
+  if (data.username() !== "") {
     navigate("/");
   }
 
@@ -66,7 +66,7 @@ export default function Login() {
                 bg={"blue.400"}
                 color={"white"}
                 onClick={() => {
-                  data.username = username;
+                  data.setUsername(username);
                   navigate("/");
                 }}
                 _hover={{

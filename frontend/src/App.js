@@ -6,7 +6,7 @@ import UserFrame from "./UserFrame";
 
 function App() {
   const [usernames, setUsernames] = useState([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8000/image/usernames")
@@ -21,9 +21,7 @@ function App() {
       );
   }, []);
 
-  console.log("username " + data.username);
-
-  if (data.username === null) {
+  if (data.username() === "") {
     navigate("/login/");
   }
 
