@@ -9,9 +9,7 @@ from starlette.middleware.cors import CORSMiddleware
 import socketio
 
 app = FastAPI()
-database = {
-    "users": list()
-}
+database = {"users": list()}
 
 app.add_middleware(
     CORSMiddleware,
@@ -54,11 +52,15 @@ async def get_usernames():
         files = source_dir.iterdir()
         usernames = [f.name.split(".")[0] for f in files]
         return {"files": usernames}
-    except: 
+    except:
         return {"error": "failure collecting filenames"}
 
 
-@app.get("/image/get", responses={200: {"content": {"image/png": {}}}}, response_class=Response)
+@app.get(
+    "/image/get",
+    responses={200: {"content": {"image/png": {}}}},
+    response_class=Response,
+)
 async def get_file(username: str):
     """
     Returns an image from the database
