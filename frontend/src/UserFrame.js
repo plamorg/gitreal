@@ -44,7 +44,12 @@ export default function UserFrame(props) {
       .then((res) => res.json())
       .then((json) => {
         if (!!json.likes) {
-          setAmt(json.likes);
+          setAmt(json.likes.length);
+          if (json.likes.includes(data.username())) {
+            setLiked(true);
+          } else {
+            setLiked(false);
+          }
         }
       });
   });
@@ -115,7 +120,7 @@ export default function UserFrame(props) {
                     console.log(json);
                     if (json.likes !== null && json.likes !== undefined) {
                       console.log("updating 2");
-                      setAmt(json.likes);
+                      setAmt(json.likes.length);
                     }
                   })
                   .catch((err) => console.error(err));
@@ -137,7 +142,7 @@ export default function UserFrame(props) {
                     console.log(json);
                     if (json.likes !== null && json.likes !== undefined) {
                       console.log("updating");
-                      setAmt(json.likes);
+                      setAmt(json.likes.length);
                     }
                   })
                   .catch((err) => console.error(err));

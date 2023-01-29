@@ -174,4 +174,5 @@ async def get_likes(username: str):
     if username not in database["users"]:
         return {"error": f"user {username} not in users"}
 
-    return {"likes": len(database["users"][username])}
+    print(database["users"][username])
+    return {"likes": database["users"][username]}
