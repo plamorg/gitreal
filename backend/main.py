@@ -97,7 +97,7 @@ def get_file(username: str, directory: str):
     usernames = [f.name.split(".")[0] for f in files]
     if username not in usernames:
         return {"error": f"username {username} not found"}
-    return FileResponse(f"database/{username}.png")
+    return FileResponse(f"{directory}/{username}.png")
 
 @app.get(
     "/image/get",
