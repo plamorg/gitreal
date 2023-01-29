@@ -28,7 +28,6 @@ async def read_root():
 @app.post("/image/uploaddesktop/")
 async def create_file(file: UploadFile = File(), username: str = Form()):
     try:
-        print(username)
         contents = file.file.read()
         directory = "database"
         Path(f"{directory}/").mkdir(parents=True, exist_ok=True)
@@ -99,7 +98,6 @@ async def like_post(liker: Request):
     if liker["sourceuser"] not in database["users"][liker["targetuser"]]:
         database["users"][liker["targetuser"]].add(liker["sourceuser"])
 
-    print(database)
     return {"likes": len(database["users"][liker["targetuser"]])}
 
 
@@ -117,7 +115,6 @@ async def unlike_post(liker: Request):
     if liker["sourceuser"] in database["users"][liker["targetuser"]]:
         database["users"][liker["targetuser"]].remove(liker["sourceuser"])
 
-    print(database)
     return {"likes": len(database["users"][liker["targetuser"]])}
 
 
