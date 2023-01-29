@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "@chakra-ui/react";
 import data from "./global";
 import UserFrame from "./UserFrame";
+import Navbar from "./Navbar";
 
 function App() {
   const [usernames, setUsernames] = useState([]);
@@ -26,11 +27,14 @@ function App() {
   }
 
   return (
-    <Container>
-      {usernames.map((username) => {
-        return <UserFrame key={username} username={username} />;
-      })}
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        {usernames.map((username) => {
+          return <UserFrame key={username} username={username} />;
+        })}
+      </Container>
+    </>
   );
 }
 

@@ -28,7 +28,7 @@ export default function UserFrame(props) {
       <Box
         w="3xl"
         rounded={"sm"}
-        my={5}
+        my={1}
         mx={[0, 5]}
         overflow={"hidden"}
         bg="white"

@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Center, Box, Input, Button, Image } from "@chakra-ui/react";
+import data from "./global";
 
 function uploadImage(image) {
   const url = "http://localhost:8000/image/uploaddesktop/";
   const formData = new FormData();
   formData.append("file", image);
-  formData.append("username", "enterusernamehere");
+  formData.append("username", data.username());
   fetch(url, {
     method: "POST",
     body: formData,
@@ -16,6 +18,7 @@ function uploadImage(image) {
 }
 
 const UploadPage = () => {
+  const navigate = useNavigate();
   const [fileURL, setFileURL] = useState();
   const [file, setFile] = useState();
 
@@ -42,7 +45,13 @@ const UploadPage = () => {
             <Box w="64" h="64" bg="gray"></Box>
           )}
         </Center>
-        <Button mt={5} onClick={() => uploadImage(file)}>
+        <Button
+          mt={5}
+          onClick={() => {
+            uploadImage(file);
+            navigate("/");
+          }}
+        >
           Upload
         </Button>
       </Box>
