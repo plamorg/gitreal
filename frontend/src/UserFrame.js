@@ -15,6 +15,7 @@ import data from "./global";
 export default function UserFrame(props) {
   const [liked, setLiked] = useState(false);
   const [image, setImage] = useState(null);
+  const [webcamImage, setWebcamImage] = useState(null);
   const [amt, setAmt] = useState(0);
 
   useEffect(() => {
@@ -24,6 +25,15 @@ export default function UserFrame(props) {
     )
       .then((res) => res.blob())
       .then((blob) => setImage(URL.createObjectURL(blob)));
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:8000/webcam/get?" +
+        new URLSearchParams({ username: props.username })
+    )
+      .then((res) => res.blob())
+      .then((blob) => setWebcamImage(URL.createObjectURL(blob)));
   }, []);
 
   useEffect(() => {
@@ -62,10 +72,22 @@ export default function UserFrame(props) {
             alt={"Image"}
           />
         </Box>
-        <HStack borderTop={"1px"} color="black" justifyContent="space-between">
-          <Heading p={4} color={"black"} fontSize={"1xl"} noOfLines={1}>
+        <HStack
+          borderTop={"1px"}
+          color="black"
+          justifyContent="space-between"
+          py={4}
+        >
+          <Heading p={4} color={"black"} fontSize={"2xl"} noOfLines={1}>
             {props.username}
           </Heading>
+          <Img
+            src={webcamImage}
+            borderRadius="full"
+            objectFit="cover"
+            boxSize="150px"
+            alt={"Image"}
+          />
           <Flex
             p={4}
             alignItems="center"
